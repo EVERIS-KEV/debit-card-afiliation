@@ -44,32 +44,41 @@ public class debitCardController {
 		return service.getFindByCustomer(id);
 	}
 
-	@PostMapping("/save")
-	public Mono<Object> create(@RequestBody @Valid debitCard model, BindingResult bindinResult) {
+	public Mono<Object> errorResult(BindingResult bindinResult) {
 		String msg = "";
 
-		if (bindinResult.hasErrors()) {
-			for (int i = 0; i < bindinResult.getAllErrors().size(); i++)
-				msg = bindinResult.getAllErrors().get(0).getDefaultMessage();
-			return Mono.just(new message(msg));
-		}
+		for (int i = 0; i < bindinResult.getAllErrors().size(); i++)
+			msg = bindinResult.getAllErrors().get(0).getDefaultMessage();
+
+		return Mono.just(new message(msg));
+	}
+
+	@PostMapping("/save")
+	public Mono<Object> create(@RequestBody @Valid debitCard model, BindingResult bindinResult) {
+
+		if (bindinResult.hasErrors())
+			return errorResult(bindinResult);
 
 		return service.save(model);
 	}
 
 	@PostMapping("/addAccount/{id}")
-	public Mono<Object> create(@PathVariable("id") String id, @RequestBody @Valid account model,
+	public Mono<Object> addAccount(@PathVariable("id") String id, @RequestBody @Valid account model,
 			BindingResult bindinResult) {
-		String msg = "";
 
-		if (bindinResult.hasErrors()) {
-			for (int i = 0; i < bindinResult.getAllErrors().size(); i++)
-				msg = bindinResult.getAllErrors().get(0).getDefaultMessage();
-			return Mono.just(new message(msg));
-		}
-
-		System.out.println(id);
+		if (bindinResult.hasErrors())
+			return errorResult(bindinResult);
 
 		return service.addAccount(id, model);
+	}
+
+	@PostMapping("/setPrincipal/{id}")
+	public Mono<Object> setPrincipal(@PathVariable("id") String id, @RequestBody @Valid account model,
+			BindingResult bindinResult) {
+
+		if (bindinResult.hasErrors())
+			return errorResult(bindinResult);
+
+		return service.setPrincipalAccount(id, model);
 	}
 }
