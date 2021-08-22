@@ -67,15 +67,15 @@ public class debitCardSerice {
 				.bodyToMono(accountData.class).block();
 	}
 
-	private String customerByAccount(String number) {
+	private accountData customerByAccount(String number) {
 		if (verifyNumberSC(number))
-			return findSavingAccountByNumber(number).getIdCustomer();
+			return findSavingAccountByNumber(number);
 
 		if (verifyNumberCC(number))
-			return findCurrentAccountByNumber(number).getIdCustomer();
+			return findCurrentAccountByNumber(number);
 
 		else
-			return findFixedAccountByNumber(number).getIdCustomer();
+			return findFixedAccountByNumber(number);
 	}
 
 	private Boolean verifyDebitCard(String id, account model) {
@@ -87,7 +87,8 @@ public class debitCardSerice {
 			if (!verifyAccount(model.getNumberAccount()))
 				return true;
 
-			if (!customerByAccount(model.getNumberAccount()).equals(repository.findById(id).get().getIdCustomer()))
+			if (!customerByAccount(model.getNumberAccount()).getIdCustomer()
+					.equals(repository.findById(id).get().getIdCustomer()))
 				return true;
 
 			return false;
@@ -134,32 +135,34 @@ public class debitCardSerice {
 
 	public Mono<Object> addAccount(String id, account model) {
 
+		debitCard card = repository.findById(id).get();
+
 		if (verifyDebitCard(id, model))
 			return Mono.just(new message("Datos incorrectos."));
 
 		if (findAccountNumber(id, model.getNumberAccount()))
-			return Mono.just(new message("Esta cuenta ya está registrada."));
+			return Mono.just(new message("Esta cuenta ya está afiliada a su tarjeta."));
 
 		if (repository.findById(id).get().getAccounts().size() == 0) {
 			if (model.getPrincipal())
-				repository.findById(id).get().getAccounts().add(model);
+				card.getAccounts().add(model);
 			else
 				return Mono.just(new message("Esta es su única cuenta y debe ser la principal."));
 		} else {
 			if (!model.getPrincipal())
-				repository.findById(id).get().getAccounts().add(model);
+				card.getAccounts().add(model);
 			else
 				return Mono.just(new message("Ya tiene una cuenta principal."));
 		}
 
-		repository.save(repository.findById(id).get());
+		repository.save(card);/* POSIBLE ERROR */
 		return Mono.just(new message("Cuenta añadida."));
 	}
 
 	public Mono<Object> get(String number) {
 		try {
 			return Mono.just(
-					repository.findAll().stream().filter(c -> c.getAccountNumber().equals(number)).findFirst().get());
+					repository.findAll().stream().filter(c -> c.getAccountNumber().equals(number)).findAny().get());
 		} catch (Exception e) {
 			return Mono.just(new message("Tarjeta no econtrada."));
 		}
@@ -172,6 +175,11 @@ public class debitCardSerice {
 	public Flux<Object> getFindByCustomer(String id) {
 		return Flux.fromIterable(
 				repository.findAll().stream().filter(c -> c.getIdCustomer().equals(id)).collect(Collectors.toList()));
+	}
+
+	public Mono<Object> getAccountPrincipal(String id) {
+		return Mono.just(repository.findById(id).get().getAccounts().stream().filter(c -> c.getPrincipal().equals(true))
+				.findAny().get());
 	}
 
 }

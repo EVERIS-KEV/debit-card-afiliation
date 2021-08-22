@@ -29,6 +29,15 @@ public class debitCardController {
 	@Autowired
 	private debitCardSerice service;
 
+	public Mono<Object> errorResult(BindingResult bindinResult) {
+		String msg = "";
+
+		for (int i = 0; i < bindinResult.getAllErrors().size(); i++)
+			msg = bindinResult.getAllErrors().get(0).getDefaultMessage();
+
+		return Mono.just(new message(msg));
+	}
+
 	@GetMapping("/")
 	public Flux<Object> getAll() {
 		return service.getAll();
@@ -44,13 +53,9 @@ public class debitCardController {
 		return service.getFindByCustomer(id);
 	}
 
-	public Mono<Object> errorResult(BindingResult bindinResult) {
-		String msg = "";
-
-		for (int i = 0; i < bindinResult.getAllErrors().size(); i++)
-			msg = bindinResult.getAllErrors().get(0).getDefaultMessage();
-
-		return Mono.just(new message(msg));
+	@GetMapping("/getPrincipal/{id}")
+	public Mono<Object> getPrincipal(@PathVariable("id") String id) {
+		return service.getAccountPrincipal(id);
 	}
 
 	@PostMapping("/save")

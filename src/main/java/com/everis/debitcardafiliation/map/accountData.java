@@ -13,7 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class accountData {
-	private String idCurrentAccount;
 	private String profile;
 	private String accountNumber;
 	private double amount;

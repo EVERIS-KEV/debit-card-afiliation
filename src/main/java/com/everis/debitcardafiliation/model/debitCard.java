@@ -39,7 +39,9 @@ public class debitCard {
 
 	public debitCard(String idCustomer, String password) {
 		this.idCustomer = idCustomer;
-		this.password = password;
+		this.password = webclient.logic.get().uri("/encriptBySha1/" + password).retrieve().bodyToMono(String.class)
+				.block();
+
 	}
 
 }
