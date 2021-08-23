@@ -10,8 +10,8 @@ import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.everis.debitcardafiliation.consumer.webclient;
-import com.everis.debitcardafiliation.dto.movementFrom;
+import com.everis.debitcardafiliation.consumer.Webclient;
+import com.everis.debitcardafiliation.dto.MovementFrom;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Document(collection = "debit-card")
-public class debitCard {
+public class DebitCard {
 	@Id
 	private String idDebitCard;
 
@@ -33,15 +33,15 @@ public class debitCard {
 	private String password;
 
 	private Date dateCreated = new Date();
-	private String cardNumber = webclient.logic.get().uri("/generatedNumberLong/10").retrieve()
+	private String cardNumber = Webclient.logic.get().uri("/generatedNumberLong/10").retrieve()
 			.bodyToMono(String.class).block();
 
-	private List<accountAffiliate> accounts = new ArrayList<accountAffiliate>();
-	private List<movementFrom> movements = new ArrayList<movementFrom>();
+	private List<AccountAffiliate> accounts = new ArrayList<>();
+	private List<MovementFrom> movements = new ArrayList<>();
 
-	public debitCard(String idCustomer, String password) {
+	public DebitCard(String idCustomer, String password) {
 		this.idCustomer = idCustomer;
-		this.password = webclient.logic.get().uri("/encriptBySha1/" + password).retrieve().bodyToMono(String.class)
+		this.password = Webclient.logic.get().uri("/encriptBySha1/" + password).retrieve().bodyToMono(String.class)
 				.block();
 
 	}

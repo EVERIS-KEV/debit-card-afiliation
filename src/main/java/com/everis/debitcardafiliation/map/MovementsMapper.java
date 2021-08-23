@@ -11,14 +11,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class movementsMapper {
+public class MovementsMapper {
 	private Date dateCreated;
 	private String type;
 	private double amount;
 	private String accountEmisor;
 	private String accountRecep;
 
-	public movementsMapper(String accountEmisor, double amount) {
+	public MovementsMapper(String accountEmisor, double amount) {
 		this.dateCreated = new Date();
 		this.accountEmisor = accountEmisor;
 		this.amount = amount;
