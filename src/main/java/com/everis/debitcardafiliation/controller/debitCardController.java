@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.everis.debitcardafiliation.dto.message;
-import com.everis.debitcardafiliation.model.account;
+import com.everis.debitcardafiliation.dto.movementFrom;
+import com.everis.debitcardafiliation.map.accountMapper;
+import com.everis.debitcardafiliation.model.accountAffiliate;
 import com.everis.debitcardafiliation.model.debitCard;
 import com.everis.debitcardafiliation.service.debitCardSerice;
 
@@ -29,11 +31,12 @@ public class debitCardController {
 	@Autowired
 	private debitCardSerice service;
 
-	public Mono<Object> errorResult(BindingResult bindinResult) {
+	private Mono<Object> errorResult(BindingResult bindinResult) {
 		String msg = "";
 
-		for (int i = 0; i < bindinResult.getAllErrors().size(); i++)
+		for (int i = 0; i < bindinResult.getAllErrors().size(); i++) {
 			msg = bindinResult.getAllErrors().get(0).getDefaultMessage();
+		}
 
 		return Mono.just(new message(msg));
 	}
@@ -54,36 +57,50 @@ public class debitCardController {
 	}
 
 	@GetMapping("/getPrincipal/{id}")
-	public Mono<Object> getPrincipal(@PathVariable("id") String id) {
+	public Mono<accountMapper> getPrincipal(@PathVariable("id") String id) {
 		return service.getAccountPrincipal(id);
 	}
 
 	@PostMapping("/save")
 	public Mono<Object> create(@RequestBody @Valid debitCard model, BindingResult bindinResult) {
 
-		if (bindinResult.hasErrors())
+		if (bindinResult.hasErrors()) {
 			return errorResult(bindinResult);
+		}
 
 		return service.save(model);
 	}
 
 	@PostMapping("/addAccount/{id}")
-	public Mono<Object> addAccount(@PathVariable("id") String id, @RequestBody @Valid account model,
+	public Mono<Object> addAccount(@PathVariable("id") String id, @RequestBody @Valid accountAffiliate model,
 			BindingResult bindinResult) {
 
-		if (bindinResult.hasErrors())
+		if (bindinResult.hasErrors()) {
 			return errorResult(bindinResult);
+		}
 
 		return service.addAccount(id, model);
 	}
 
 	@PostMapping("/setPrincipal/{id}")
-	public Mono<Object> setPrincipal(@PathVariable("id") String id, @RequestBody @Valid account model,
+	public Mono<Object> setPrincipal(@PathVariable("id") String id, @RequestBody @Valid accountAffiliate model,
 			BindingResult bindinResult) {
 
-		if (bindinResult.hasErrors())
+		if (bindinResult.hasErrors()) {
 			return errorResult(bindinResult);
+		}
 
 		return service.setPrincipalAccount(id, model);
+	}
+
+	@PostMapping("/movements")
+	public Mono<Object> addMovements(@RequestBody @Valid movementFrom model, BindingResult bindinResult) {
+
+		if (bindinResult.hasErrors()) {
+			return errorResult(bindinResult);
+		}
+
+		return Mono.just(service.addMovements(model));
+
 	}
 }

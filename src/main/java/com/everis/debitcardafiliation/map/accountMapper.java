@@ -12,12 +12,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class accountData {
+public class accountMapper {
 	private String profile;
 	private String accountNumber;
 	private double amount;
 	private Date dateCreated;
 	private String typeAccount;
-	private List<movements> movement;
+	private List<movementsMapper> movement;
 	private String idCustomer;
 }

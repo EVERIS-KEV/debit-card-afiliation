@@ -9,12 +9,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class movements {
+@NoArgsConstructor
+public class movementsMapper {
 	private Date dateCreated;
 	private String type;
 	private double amount;
 	private String accountEmisor;
 	private String accountRecep;
+
+	public movementsMapper(String accountEmisor, double amount) {
+		this.dateCreated = new Date();
+		this.accountEmisor = accountEmisor;
+		this.amount = amount;
+		this.type = "Retiro";
+	}
 }

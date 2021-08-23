@@ -10,6 +10,7 @@ public class DebitCardAfiliationApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DebitCardAfiliationApplication.class, args);
+		System.out.println("Servicio de tarjetas de debito activado.");
 	}
 
 }

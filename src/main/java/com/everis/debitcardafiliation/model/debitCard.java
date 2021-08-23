@@ -11,6 +11,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.everis.debitcardafiliation.consumer.webclient;
+import com.everis.debitcardafiliation.dto.movementFrom;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,10 +33,11 @@ public class debitCard {
 	private String password;
 
 	private Date dateCreated = new Date();
-	private String accountNumber = webclient.logic.get().uri("/generatedNumberLong/10").retrieve()
+	private String cardNumber = webclient.logic.get().uri("/generatedNumberLong/10").retrieve()
 			.bodyToMono(String.class).block();
 
-	private List<account> accounts = new ArrayList<account>();
+	private List<accountAffiliate> accounts = new ArrayList<accountAffiliate>();
+	private List<movementFrom> movements = new ArrayList<movementFrom>();
 
 	public debitCard(String idCustomer, String password) {
 		this.idCustomer = idCustomer;
