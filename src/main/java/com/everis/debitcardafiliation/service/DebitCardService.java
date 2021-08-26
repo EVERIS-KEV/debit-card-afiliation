@@ -3,21 +3,20 @@ package com.everis.debitcardafiliation.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.everis.debitcardafiliation.constant.Constants;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.everis.debitcardafiliation.constant.Constants;
 import com.everis.debitcardafiliation.consumer.Webclient;
 import com.everis.debitcardafiliation.dto.Message;
 import com.everis.debitcardafiliation.dto.MovementFrom;
 import com.everis.debitcardafiliation.map.AccountMapper;
-import com.everis.debitcardafiliation.map.MovementsMapper;
 import com.everis.debitcardafiliation.model.AccountAffiliate;
 import com.everis.debitcardafiliation.model.DebitCard;
 import com.everis.debitcardafiliation.repository.DebitCardRepository;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -72,9 +71,13 @@ public class DebitCardService {
 	}
 
 	private AccountMapper findByAccount(String number) {
-		if (Boolean.TRUE.equals(verifyNumberSC(number))) return findSavingAccountByNumber(number);
-		else if (Boolean.TRUE.equals(verifyNumberCC(number))) return findCurrentAccountByNumber(number);
-		else return findFixedAccountByNumber(number);
+		if (Boolean.TRUE.equals(verifyNumberSC(number))) {
+			return findSavingAccountByNumber(number);
+		} else if (Boolean.TRUE.equals(verifyNumberCC(number))) {
+			return findCurrentAccountByNumber(number);
+		} else {
+			return findFixedAccountByNumber(number);
+		}
 	}
 
 	private Boolean verifyDebitCard(String id, AccountAffiliate model) {

@@ -1,7 +1,7 @@
 package com.everis.debitcardafiliation.map;
 
-import java.util.Date;
 import java.util.List;
+import java.time.*; 
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +16,7 @@ public class AccountMapper {
 	private String profile;
 	private String accountNumber;
 	private double amount;
-	private Date dateCreated;
+	private LocalDateTime dateCreated;
 	private String typeAccount;
 	private List<MovementsMapper> movement;
 	private String idCustomer;

@@ -4,20 +4,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*; 
 
-import com.everis.debitcardafiliation.dto.Message;
-import com.everis.debitcardafiliation.dto.MovementFrom;
-import com.everis.debitcardafiliation.map.AccountMapper;
-import com.everis.debitcardafiliation.model.AccountAffiliate;
-import com.everis.debitcardafiliation.model.DebitCard;
+import com.everis.debitcardafiliation.dto.*; 
+import com.everis.debitcardafiliation.map.*;
+import com.everis.debitcardafiliation.model.*; 
 import com.everis.debitcardafiliation.service.DebitCardService;
 
 import reactor.core.publisher.Flux;
@@ -64,9 +55,8 @@ public class DebitCardController {
 	@PostMapping("/save")
 	public Mono<Object> create(@RequestBody @Valid DebitCard model, BindingResult bindinResult) {
 
-		if (bindinResult.hasErrors()) {
+		if (bindinResult.hasErrors())
 			return errorResult(bindinResult);
-		}
 
 		return service.save(model);
 	}
@@ -75,9 +65,8 @@ public class DebitCardController {
 	public Mono<Object> addAccount(@PathVariable("id") String id, @RequestBody @Valid AccountAffiliate model,
 			BindingResult bindinResult) {
 
-		if (bindinResult.hasErrors()) {
+		if (bindinResult.hasErrors())
 			return errorResult(bindinResult);
-		}
 
 		return service.addAccount(id, model);
 	}
@@ -86,9 +75,8 @@ public class DebitCardController {
 	public Mono<Object> setPrincipal(@PathVariable("id") String id, @RequestBody @Valid AccountAffiliate model,
 			BindingResult bindinResult) {
 
-		if (bindinResult.hasErrors()) {
+		if (bindinResult.hasErrors())
 			return errorResult(bindinResult);
-		}
 
 		return service.setPrincipalAccount(id, model);
 	}
@@ -96,9 +84,7 @@ public class DebitCardController {
 	@PostMapping("/movements")
 	public Mono<Object> addMovements(@RequestBody @Valid MovementFrom model, BindingResult bindinResult) {
 
-		if (bindinResult.hasErrors()) {
-			return errorResult(bindinResult);
-		}
+		if (bindinResult.hasErrors())  return errorResult(bindinResult); 
 
 		return Mono.just(service.addMovement(model));
 

@@ -1,6 +1,6 @@
 package com.everis.debitcardafiliation.model;
 
-import java.util.Date;
+import java.time.*; 
 
 import javax.validation.constraints.NotBlank;
 
@@ -13,8 +13,8 @@ public class AccountAffiliate {
 
 	@NotBlank(message = "El campo numero de cuenta no debe estar vacio.")
 	private String numberAccount;
-	private Boolean principal;
-	private Date dateAffiliate = new Date();
+	private Boolean principal; 
+	private LocalDateTime dateAffiliate = LocalDateTime.now( ZoneId.of("America/Lima") );
 
 	public AccountAffiliate() {
 		this.principal = false;
