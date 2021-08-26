@@ -1,6 +1,6 @@
 package com.everis.debitcardafiliation.dto;
 
-import java.util.Date;
+import java.time.*;
 
 import javax.validation.constraints.NotBlank;
 
@@ -19,7 +19,7 @@ public class MovementFrom {
 	@NotBlank(message = "Debe ingresar su contraseña.")
 	private String password;
 
-	private Date date = new Date();
+	private LocalDateTime dateCreated = LocalDateTime.now( ZoneId.of("America/Lima") );
 	private String numberAccount;
 
 	@NotBlank(message = "Debe ingresar un monto.")
@@ -27,8 +27,8 @@ public class MovementFrom {
 
 	public MovementFrom(String numberDebitCard, String password, String numberAccount, Double amount) {
 		this.numberDebitCard = numberDebitCard;
-		this.password = Webclient.logic.get().uri("/encriptBySha1/" + password).retrieve().bodyToMono(String.class)
-				.block();
+		this.password = password;
+		//Webclient.logic.get().uri("/encriptBySha1/" + password).retrieve().bodyToMono(String.class).block();
 		this.numberAccount = numberAccount;
 		this.amount = amount;
 	}

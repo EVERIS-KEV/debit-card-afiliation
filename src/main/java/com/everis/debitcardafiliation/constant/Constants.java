@@ -4,7 +4,7 @@ public enum Constants {
 	;
 	public static class Path {
 
-		public static final String GATEWAY = "44.196.6.42:8090/";
+		public static final String GATEWAY = "host.docker.internal:8090/";
 		public static final String SERVICE_PATH = "service";
 		public static final String HTTP_CONSTANT = "http://";
 
