@@ -1,6 +1,5 @@
 package com.everis.debitcardafiliation.map;
 
-import java.util.Date;
 import java.time.*;
 
 import lombok.AllArgsConstructor;

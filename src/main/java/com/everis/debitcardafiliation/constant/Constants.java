@@ -35,6 +35,7 @@ public enum Constants {
 		public static final String CLIENT_NOT_FOUND = "Cliente no econtrado.";
 		public static final String CLIENT_SUCCESS = "Registrado correctamente.";
 		public static final String INVALID_DATA = "Datos inválidos.";
+		public static final String NO_ACCOUNT = "No tiene cuentas afiliadas.";
 
 		public static final String UPDATE_TARGET = "Tarjeta actualizada.";
 		public static final String NOT_UPDATE_TARGET = "Esta cuenta ya está afiliada a su tarjeta.";
