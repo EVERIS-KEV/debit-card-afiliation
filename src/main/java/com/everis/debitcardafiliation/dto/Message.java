@@ -10,5 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Message {
-	private String msg;
+
+    private String msg;
 }

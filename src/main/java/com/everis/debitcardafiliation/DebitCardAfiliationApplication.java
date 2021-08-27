@@ -10,9 +10,9 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @Slf4j
 public class DebitCardAfiliationApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DebitCardAfiliationApplication.class, args);
-		log.info("Servicio de tarjetas de débito activado.");
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DebitCardAfiliationApplication.class, args);
 
+        log.info("Servicio de tarjetas de débito activado.");
+    }
 }
