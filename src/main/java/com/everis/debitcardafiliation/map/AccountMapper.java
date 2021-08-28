@@ -13,11 +13,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AccountMapper {
 
-    private String profile;
-    private String accountNumber;
-    private double amount;
-    private LocalDateTime dateCreated;
-    private String typeAccount;
-    private List<MovementsMapper> movement;
-    private String idCustomer;
+  private String profile;
+  private String accountNumber;
+  private double amount;
+  private LocalDateTime dateCreated;
+  private String typeAccount;
+  private List<MovementsMapper> movement;
+  private String idCustomer;
 }
