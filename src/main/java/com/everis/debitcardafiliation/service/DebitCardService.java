@@ -164,10 +164,10 @@ public class DebitCardService {
     DebitCard card = repository.findById(id).get();
 
     card
-      .getAccounts()
+      .getAccounts() 
       .stream()
       .map(
-        c -> {
+        c -> { 
           c.setPrincipal(c.getNumberAccount().equals(model.getNumberAccount()));
           return c;
         }
